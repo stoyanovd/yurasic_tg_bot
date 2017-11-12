@@ -1,6 +1,7 @@
 import os
 import urllib.parse
 
+import yaml
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler
 import logging
@@ -52,7 +53,9 @@ def echo(bot, update):
     for r in results:
         line = []
         if 'iv' in r:
-            b = InlineKeyboardButton(text="InstView", callback_data='y_12') # + urllib.parse.quote_plus(r['iv']))
+            r['chat_id'] = update.message.chat_id
+            b = InlineKeyboardButton(text="InstView",
+                                     callback_data='y_' + yaml.dump(r))  # + urllib.parse.quote_plus(r['iv']))
             line += [b]
 
         b = InlineKeyboardButton(text="(url: " + r[GSEARCH_displayLink] + ")" + r['title'], url=r['link'])
@@ -77,9 +80,10 @@ def callback_handler_func(bot, update):
         print("we in callbackHandler. str is " + query)
         return
     print("we in callbackHandler find 'y'")
-    iv_link = query[2:]
-
-    bot.send_message(chat_id=update.message.chat.id, text="IV link: " + iv_link)
+    d = yaml.load(query[2:])
+    iv_link = d['iv']
+    chat_id = d['chat_id']
+    bot.send_message(chat_id=chat_id, text="IV link for " + d['title'] + "\n" + iv_link)
 
     # chat = Chat.get(chat_id=chat_id)
     # if not chat:
