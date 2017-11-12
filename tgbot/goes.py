@@ -65,7 +65,7 @@ def echo(bot, update):
                                      callback_data='y_' + r['link'])  # + urllib.parse.quote_plus(r['iv']))
             line += [b]
 
-        b = InlineKeyboardButton(text="{:20} | ".format(get_hostname(r[GSEARCH_displayLink])) + r['title'],
+        b = InlineKeyboardButton(text="{:>20} | ".format(get_hostname(r['link'])) + r['title'],
                                  url=r['link'])
         line += [b]
 
