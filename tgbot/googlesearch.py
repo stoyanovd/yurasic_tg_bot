@@ -62,6 +62,8 @@ def google_search(s):
     ans = ["Search results: "]
     ans += ["len: " + str(len(results))]
 
+    print(results.__dict__)
+
     sites = []
     for result in results:
         # sites += [urllib.parse.quote_plus(pprint.pformat(result))]
