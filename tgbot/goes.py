@@ -1,4 +1,5 @@
 import os
+import urllib.parse
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler
@@ -42,19 +43,20 @@ def echo(bot, update):
     # html = bs4.BeautifulSoup(r.text, "html.parser")
     # bm.name = html.title.text
 
+    # urllib.parse.quote_plus(pprint.pformat(result))
+
     # button_list = [InlineKeyboardButton(bm.name, callback_data='y_' + str(chat.chat_id))]
     button_list = []
     for r in results:
         line = []
         if 'iv' in r:
-            b = InlineKeyboardButton(text="InstView", callback_data='y_' + r['iv'])
+            b = InlineKeyboardButton(text="InstView", callback_data='y_' + urllib.parse.quote_plus(r['iv']))
             line += [b]
 
         b = InlineKeyboardButton(text="(url: " + r[GSEARCH_displayLink] + ")" + r['title'], url=r['link'])
         line += [b]
 
         button_list += [line]
-
 
     reply_markup = InlineKeyboardMarkup(button_list)
 
