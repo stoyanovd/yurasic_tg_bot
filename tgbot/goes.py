@@ -55,7 +55,7 @@ def echo(bot, update):
         if 'iv' in r:
             r['chat_id'] = update.message.chat_id
             b = InlineKeyboardButton(text="InstView",
-                                     callback_data='y_' + yaml.dump(r))  # + urllib.parse.quote_plus(r['iv']))
+                                     callback_data='y_' + r['link'])  # + urllib.parse.quote_plus(r['iv']))
             line += [b]
 
         b = InlineKeyboardButton(text="(url: " + r[GSEARCH_displayLink] + ")" + r['title'], url=r['link'])
