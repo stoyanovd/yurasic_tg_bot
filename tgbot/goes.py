@@ -1,7 +1,7 @@
 import os
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Updater, CommandHandler
+from telegram.ext import Updater, CommandHandler, CallbackQueryHandler
 import logging
 from telegram.ext import MessageHandler, Filters
 
@@ -45,17 +45,45 @@ def echo(bot, update):
     # button_list = [InlineKeyboardButton(bm.name, callback_data='y_' + str(chat.chat_id))]
     button_list = []
     for r in results:
+        line = []
         if 'iv' in r:
-            b = InlineKeyboardButton(text="(IV: " + r[GSEARCH_displayLink] + ")" + r['title'], url=r['iv'])
-        else:
-            b = InlineKeyboardButton(text="(url: " + r[GSEARCH_displayLink] + ")" + r['title'], url=r['link'])
-        button_list += [b]
+            b = InlineKeyboardButton(text="InstView", callback_data='y_' + r['iv'])
+            line += [b]
 
-    reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
+        b = InlineKeyboardButton(text="(url: " + r[GSEARCH_displayLink] + ")" + r['title'], url=r['link'])
+        line += [b]
+
+        button_list += [line]
+
+
+    reply_markup = InlineKeyboardMarkup(button_list)
 
     update.message.reply_text("Results:", reply_markup=reply_markup)
 
     # bot.send_message(chat_id=update.message.chat_id, text="I find: " + ans)
+
+
+def callback_handler_func(bot, update):
+    # chat = get_chat(update)
+
+    print("we in callbackHandler")
+
+    query = update.callback_query.data
+    if not query.startswith('y_'):
+        print("we in callbackHandler. str is " + query)
+        return
+    print("we in callbackHandler find 'y'")
+    iv_link = query[2:]
+
+    bot.send_message(chat_id=update.message.chat_id, text="IV link: " + iv_link)
+
+    # chat = Chat.get(chat_id=chat_id)
+    # if not chat:
+    #     chat = Chat(chat_id=chat_id)
+    #     bot.send_message(chat_id, "Hi in new chat.")
+    # commit()
+    #
+    # mid_handler_add_bm_get_name('y', chat, update, bot)
 
 
 # from songsapp import models
@@ -89,6 +117,7 @@ dispatcher.add_handler(CommandHandler('hello', hello))
 # dispatcher.add_handler(CommandHandler('list', write_list))
 
 dispatcher.add_handler(MessageHandler(Filters.text, echo))
+dispatcher.add_handler(CallbackQueryHandler(callback_handler_func))
 
 print("finish set up bot.")
 
