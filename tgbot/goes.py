@@ -46,6 +46,8 @@ def echo(bot, update):
     # urllib.parse.quote_plus(pprint.pformat(result))
 
     # button_list = [InlineKeyboardButton(bm.name, callback_data='y_' + str(chat.chat_id))]
+    print('We start to create buttons...')
+
     button_list = []
     for r in results:
         line = []
