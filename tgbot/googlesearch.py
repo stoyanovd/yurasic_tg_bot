@@ -80,12 +80,11 @@ def filter_results(result):
 
 
 def google_search(s):
-    results_yurasic = inner_google_search(get_word_chords_in_lang(s) + s,
+    results_yurasic = inner_google_search(s,
                                           my_api_key, my_cse_id_yurasic_ru_all, num=3)
 
     ans = ["Search results: "]
     ans += ["len: " + str(len(results_yurasic))]
-
 
     results_yurasic = list(map(filter_results, results_yurasic))
 
