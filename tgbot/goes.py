@@ -36,6 +36,13 @@ def build_menu(buttons,
     return menu
 
 
+def get_hostname(url):
+    from urllib.parse import urlparse
+    parsed_uri = urlparse(url)
+    return parsed_uri.hostname
+    # domain = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
+
+
 def echo(bot, update):
     msg = update.message.text
 
@@ -54,11 +61,12 @@ def echo(bot, update):
         line = []
         if 'iv' in r:
             r['chat_id'] = update.message.chat_id
-            b = InlineKeyboardButton(text="InstView",
+            b = InlineKeyboardButton(text="Instant View",
                                      callback_data='y_' + r['link'])  # + urllib.parse.quote_plus(r['iv']))
             line += [b]
 
-        b = InlineKeyboardButton(text="(url: " + r[GSEARCH_displayLink] + ")" + r['title'], url=r['link'])
+        b = InlineKeyboardButton(text="{:20} | ".format(get_hostname(r[GSEARCH_displayLink])) + r['title'],
+                                 url=r['link'])
         line += [b]
 
         button_list += [line]
@@ -81,9 +89,9 @@ def callback_handler_func(bot, update):
         return
     print("we in callbackHandler find 'y'")
     full_link = query[2:]
-    cleaned_link = url_clean_http_www(full_link)
-    cleaned_link = cleaned_link[:cleaned_link.find('/')]
-    iv_link = create_iv_link(full_link, cleaned_link)
+    # cleaned_link = url_clean_http_www(full_link)
+    # cleaned_link = cleaned_link[:cleaned_link.find('/')]
+    iv_link = create_iv_link(full_link, get_hostname(full_link))
 
     print("we in callbackHandler ready to send message")
     bot.send_message(chat_id=update.callback_query.message.chat.id, text="IV link: " + "\n" + iv_link)
