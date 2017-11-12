@@ -60,10 +60,11 @@ def echo(bot, update):
     for r in results:
         line = []
         if 'iv' in r:
-            r['chat_id'] = update.message.chat_id
-            b = InlineKeyboardButton(text="Instant View",
-                                     callback_data='y_' + r['link'])  # + urllib.parse.quote_plus(r['iv']))
-            line += [b]
+            # r['chat_id'] = update.message.chat_id
+            if len(r['link']) < 62:
+                b = InlineKeyboardButton(text="Instant View",
+                                         callback_data='y_' + r['link'])  # + urllib.parse.quote_plus(r['iv']))
+                line += [b]
 
         b = InlineKeyboardButton(text="{:>20} | ".format(get_hostname(r['link'])) + r['title'],
                                  url=r['link'])
