@@ -83,7 +83,7 @@ def google_search(s):
     ans = ["Search results: "]
     ans += ["len: " + str(len(results_yurasic))]
 
-    results_yurasic = map(filter_results, results_yurasic)
+    results_yurasic = list(map(filter_results, results_yurasic))
 
     results_all = inner_google_search(get_word_chords_in_lang(s) + s,
                                   my_api_key, my_cse_id_all, num=5)
@@ -91,7 +91,7 @@ def google_search(s):
     ans = ["Search results: "]
     ans += ["len: " + str(len(results_all))]
 
-    results_all = map(filter_results, results_all)
+    results_all = list(map(filter_results, results_all))
 
     return results_yurasic + results_all
 
