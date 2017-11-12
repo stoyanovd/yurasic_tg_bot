@@ -50,7 +50,7 @@ def echo(bot, update):
     for r in results:
         line = []
         if 'iv' in r:
-            b = InlineKeyboardButton(text="InstView", callback_data='y_' + urllib.parse.quote_plus(r['iv']))
+            b = InlineKeyboardButton(text="InstView", callback_data='y_12') # + urllib.parse.quote_plus(r['iv']))
             line += [b]
 
         b = InlineKeyboardButton(text="(url: " + r[GSEARCH_displayLink] + ")" + r['title'], url=r['link'])
@@ -59,7 +59,7 @@ def echo(bot, update):
         button_list += [line]
 
     reply_markup = InlineKeyboardMarkup(button_list)
-
+    print('We are trying to send buttons_menu...')
     update.message.reply_text("Results:", reply_markup=reply_markup)
 
     # bot.send_message(chat_id=update.message.chat_id, text="I find: " + ans)
