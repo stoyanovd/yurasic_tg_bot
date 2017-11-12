@@ -79,7 +79,7 @@ def callback_handler_func(bot, update):
     print("we in callbackHandler find 'y'")
     iv_link = query[2:]
 
-    bot.send_message(chat_id=update.message.chat_id, text="IV link: " + iv_link)
+    bot.send_message(chat_id=update.message.chat.id, text="IV link: " + iv_link)
 
     # chat = Chat.get(chat_id=chat_id)
     # if not chat:
