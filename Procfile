@@ -1,13 +1,5 @@
-# old
-# web: python manage.py runserver
-
 # tg bot
-web: python tgbot/goes.py
+web: python goes.py
 
-# current
-# web: gunicorn yurasic.wsgi --log-file -
-
-####
-# web: scrapyd
-# web: scrapyd-heroku
-
+# old
+# web: gunicorn my_app.wsgi --log-file -

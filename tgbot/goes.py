@@ -5,12 +5,9 @@ import logging
 from telegram.ext import MessageHandler, Filters
 
 from tgbot.googlesearch import google_search
-from utils.import_models import get_models_from_yurasic_django
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
-
-yurasic_models = get_models_from_yurasic_django()
 
 
 def start(bot, update):
