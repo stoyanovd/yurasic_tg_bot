@@ -8,7 +8,7 @@ import logging
 from telegram.ext import MessageHandler, Filters
 
 from default_tg_bot.tg_conf import init_conf
-from tgbot.googlesearch import google_search, GSEARCH_displayLink
+from tgbot.googlesearch import google_search, GSEARCH_displayLink, url_clean_http_www, create_iv_link
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -80,10 +80,13 @@ def callback_handler_func(bot, update):
         print("we in callbackHandler. str is " + query)
         return
     print("we in callbackHandler find 'y'")
-    d = yaml.load(query[2:])
-    iv_link = d['iv']
-    chat_id = d['chat_id']
-    bot.send_message(chat_id=chat_id, text="IV link for " + d['title'] + "\n" + iv_link)
+    full_link = query[2:]
+    cleaned_link = url_clean_http_www(full_link)
+    cleaned_link = cleaned_link[:cleaned_link.find('/')]
+    iv_link = create_iv_link(full_link, cleaned_link)
+
+    print("we in callbackHandler ready to send message")
+    bot.send_message(chat_id=update.callback_query.message.chat.id, text="IV link: " + "\n" + iv_link)
 
     # chat = Chat.get(chat_id=chat_id)
     # if not chat:

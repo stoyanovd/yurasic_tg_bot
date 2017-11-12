@@ -61,6 +61,12 @@ def url_clean_http_www(url):
     return url
 
 
+def create_iv_link(full_link, domainLink):
+    return "t.me/iv?" + \
+           "url=" + urllib.parse.quote(full_link) + \
+           "&rhash=" + iv_templates[domainLink]
+
+
 def filter_results(result):
     result = {k: result[k] for k in INTERESTING_KEYS}
     result[GSEARCH_displayLink] = url_clean_http_www(result[GSEARCH_displayLink])
@@ -72,9 +78,7 @@ def filter_results(result):
     # t.me/iv?url=...&rhash=...
     # "url=" + urllib.parse.urlencode(result[GSEARCH_link]) +
     if result[GSEARCH_displayLink] in iv_templates.keys():
-        result['iv'] = "t.me/iv?" + \
-                       "url=" + urllib.parse.quote(result[GSEARCH_link]) + \
-                       "&rhash=" + iv_templates[result[GSEARCH_displayLink]]
+        result['iv'] = create_iv_link(result[GSEARCH_link], result[GSEARCH_displayLink])
 
     return result
 
