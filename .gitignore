@@ -1,0 +1,33 @@
+#################################################
+# databases dumps
+
+/db.sqlite3
+/yurasic_db
+dbs
+latest.dump
+
+#################################################
+# current python env
+
+twistd.pid
+.python-version
+
+#################################################
+# env
+.env*
+
+
+#################################################
+# [scrapyd]
+logs/
+
+#################################################
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+#################################################
+# JetBrains IDEA
+*.iml
+.idea/
