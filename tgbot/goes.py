@@ -37,6 +37,7 @@ def build_menu(buttons,
 def echo(bot, update):
     # global d
     msg = update.message.text
+    x = 1
     ans = google_search(msg)
 
 
