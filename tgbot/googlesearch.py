@@ -12,6 +12,7 @@ from langdetect import detect_langs
 my_api_key = os.environ.get('GOOGLE_CUSTOM_SEARCH_API_TOKEN')
 my_cse_id = os.environ.get('GOOGLE_CSE_ID')
 
+# https://stackoverflow.com/questions/37083058/programmatically-searching-google-in-python-using-custom-search
 
 def inner_google_search(search_term, api_key, cse_id, **kwargs):
     service = build("customsearch", "v1", developerKey=api_key)
@@ -62,7 +63,7 @@ def google_search(s):
     ans = ["Search results: "]
     ans += ["len: " + str(len(results))]
 
-    print(results.__dict__)
+    print(results)
 
     sites = []
     for result in results:
