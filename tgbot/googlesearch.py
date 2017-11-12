@@ -40,7 +40,7 @@ def get_word_chords_in_lang(s):
 
 GSEARCH_displayLink = 'displayLink'
 GSEARCH_link = 'link'
-INTERESTING_KEYS = [GSEARCH_displayLink, GSEARCH_link]
+INTERESTING_KEYS = [GSEARCH_displayLink, GSEARCH_link, 'title']
 
 iv_templates = {
     'yurasic.ru': "2db311abdefc3d",
