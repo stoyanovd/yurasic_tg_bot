@@ -35,24 +35,20 @@ def build_menu(buttons,
 
 
 def echo(bot, update):
-    # global d
     msg = update.message.text
-    x = 1
-    ans = google_search(msg)
 
+    results = google_search(msg)
 
     # html = bs4.BeautifulSoup(r.text, "html.parser")
     # bm.name = html.title.text
 
     # button_list = [InlineKeyboardButton(bm.name, callback_data='y_' + str(chat.chat_id))]
-    # reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
+    button_list = [InlineKeyboardButton(text=r['title'], url=r['link']) for r in results]
+    reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
 
-    # update.message.reply_text("Write name for bookmark, or use hint:", reply_markup=reply_markup)
+    update.message.reply_text("Results:", reply_markup=reply_markup)
 
-    # wonder = yurasic_models.Wonder(comment=update.message.text)
-    # wonder.save()
-    # # d += [update.message.text]
-    bot.send_message(chat_id=update.message.chat_id, text="I find: " + ans)
+    # bot.send_message(chat_id=update.message.chat_id, text="I find: " + ans)
 
 
 # from songsapp import models
@@ -68,7 +64,6 @@ def echo(bot, update):
 
 #################################################
 conf = init_conf()
-
 
 token_str = 'TELEGRAM_BOT_TOKEN'
 assert token_str in os.environ.keys()
