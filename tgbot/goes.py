@@ -6,7 +6,7 @@ import logging
 from telegram.ext import MessageHandler, Filters
 
 from default_tg_bot.tg_conf import init_conf
-from tgbot.googlesearch import google_search
+from tgbot.googlesearch import google_search, GSEARCH_displayLink
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -43,7 +43,14 @@ def echo(bot, update):
     # bm.name = html.title.text
 
     # button_list = [InlineKeyboardButton(bm.name, callback_data='y_' + str(chat.chat_id))]
-    button_list = [InlineKeyboardButton(text=r['title'], url=r['link']) for r in results]
+    button_list = []
+    for r in results:
+        if 'iv' in r:
+            b = InlineKeyboardButton(text="(IV: " + r[GSEARCH_displayLink] + ")" + r['title'], url=r['iv'])
+        else:
+            b = InlineKeyboardButton(text="(url: " + r[GSEARCH_displayLink] + ")" + r['title'], url=r['link'])
+        button_list += [b]
+
     reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
 
     update.message.reply_text("Results:", reply_markup=reply_markup)
