@@ -33,7 +33,7 @@ scrapyd==1.2.0a1
 scrapyd-heroku==0.1.0
 service-identity==16.0.0
 six==1.10.0
-Twisted==17.1.0
+Twisted==21.2.0
 w3lib==1.17.0
 whitenoise==3.3.0
 zope.interface==4.3.3
